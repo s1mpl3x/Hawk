@@ -26,21 +26,22 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 public class HawkEntityListener implements Listener {
+	
+	/**
+	 * Hawk uses this event to cancel fall damage for flying/was flying players
+	 * 
+	 * @param event the {@link EntityDamageEvent}
+	 */
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerDmg(EntityDamageEvent event) {
-		if (event.getEntity() instanceof Player) {
+		if (event.getEntity() instanceof Player && event.getCause().equals(DamageCause.FALL)) {
 			Player player = (Player) event.getEntity();
-			if (Hawk.flyingPlayers.containsKey(player.getName())) {
-				if (event.getCause().equals(DamageCause.FALL)) {
-					event.setCancelled(true);
-					// player.sendMessage("[CASE 1] Fall dmg event cancelled");
-				}
-			} else if (Hawk.dmgImunePlayers.contains(player.getName())) {
+			if (Hawk.isFlyingOrHovering(player)) {
 				event.setCancelled(true);
-				// player.sendMessage("[CASE 2] Fall dmg event cancelled");
-				// main.toLogger("List Length: " + main.dmgImunePlayers.size());
-				Hawk.dmgImunePlayers.remove(player.getName());
-				// main.toLogger("List Length: " + main.dmgImunePlayers.size());
+				
+			} else if (Hawk.isDmgImmune(player)) {
+				event.setCancelled(true);
+				Hawk.removeFromImmunity(player);
 			}
 		}
 	}
