@@ -35,6 +35,8 @@ public class HawkConfiguration {
 	private static double hover_boost 			= 0.1;
 	private static double fly_boost 			= 1.5;
 	
+	private static boolean never_falldamage		= false;
+	
 	private static boolean consume_item 		= false;
 	private static int consume_ID 				= 288;
 	private static int consume_seconds_fly 		= 5;
@@ -53,6 +55,8 @@ public class HawkConfiguration {
 		default_cfg.set("Hawk.ItemID", item_ID);
 		default_cfg.set("Hawk.FlyBoost", fly_boost);
 		default_cfg.set("Hawk.HoverBoost", hover_boost);
+		
+		default_cfg.set("Hawk.NeverFalldamage", never_falldamage);
 		
 		default_cfg.set("Hawk.ConsumeItem.Enable", consume_item);
 		default_cfg.set("Hawk.ConsumeItem.ItemID", consume_ID);
@@ -83,6 +87,8 @@ public class HawkConfiguration {
 		fly_boost 				= cfg.getDouble("Hawk.FlyBoost");
 		hover_boost 			= cfg.getDouble("Hawk.HoverBoost");
 		
+		never_falldamage		= cfg.getBoolean("Hawk.NeverFalldamage");
+		
 		consume_item 			= cfg.getBoolean("Hawk.ConsumeItem.Enable");
 		consume_ID				= cfg.getInt("Hawk.ConsumeItem.ItemID");
 		consume_seconds_fly		= cfg.getInt("Hawk.ConsumeItem.SecondsFly");
@@ -92,7 +98,7 @@ public class HawkConfiguration {
 		message_Hover 			= cfg.getString("Hawk.Messages.Hover");
 		message_Land 			= cfg.getString("Hawk.Messages.Land");
 		
-		String header = main.getDescription().getFullName() + " Configuration | If you need help with this file, check http://www.lemonparty.org";
+		String header = main.getDescription().getFullName() + " Configuration | If you need help with this file, check http://forums.bukkit.org/ and search...";
 		cfg.options().header(header);
 		
 		main.saveConfig();
@@ -111,6 +117,10 @@ public class HawkConfiguration {
 
 	public static double getFly_boost() {
 		return fly_boost;
+	}
+	
+	public static boolean getNever_falldamage() {
+		return never_falldamage;
 	}
 
 	public static boolean consume_item() {

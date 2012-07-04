@@ -38,7 +38,8 @@ public class HawkEntityListener implements Listener {
 			Player player = (Player) event.getEntity();
 			if (Hawk.isFlyingOrHovering(player)) {
 				event.setCancelled(true);
-				
+			} else if (HawkConfiguration.getNever_falldamage() && player.hasPermission("hawk.fly")) {
+				event.setCancelled(true);
 			} else if (Hawk.isDmgImmune(player)) {
 				event.setCancelled(true);
 				Hawk.removeFromImmunity(player);
